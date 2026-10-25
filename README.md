@@ -15,7 +15,7 @@ Juego educativo para niños: asocia animales con tarjetas RFID y aprende datos c
 ## Tecnologías
 - Lector RFID: MFRC522
 - Microcontrolador: Arduino
-- Web: HTML, JavaScript
+- Web: HTML, JavaScript, css
 
 ## Estado del proyecto
 - [x] Lectura de tarjetas
@@ -96,7 +96,7 @@ Interactive RFID learning game with web interface: children find the matching an
 ## Technologies Used
 - RFID Reader: MFRC522
 - Microcontroller: Arduino
-- Web Technologies: HTML, JavaScript
+- Web Technologies: HTML, JavaScript, css
 
 ## Project Status
 
