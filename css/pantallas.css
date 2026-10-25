@@ -1,0 +1,111 @@
+/* Pantallas del juego: inicio, juego, acierto, error y final */
+/* ---------- Inicio ---------- */
+.desfile{display:flex;gap:clamp(.4rem,2.6vw,1.8rem);font-family:var(--emoji);font-size:clamp(2.6rem,12vh,6.5rem);line-height:1}
+.desfile span{animation:pop .7s cubic-bezier(.3,1.6,.5,1) backwards;animation-delay:calc(var(--i)*.13s + .15s)}
+@keyframes pop{from{transform:translateY(40%) scale(.2);opacity:0}}
+
+.boton{
+  font-size:clamp(1.8rem,7vh,3.4rem);font-weight:700;color:#fff;background:var(--coral);
+  border:0;cursor:pointer;border-radius:999px;padding:.3em 1em;
+  display:inline-flex;align-items:center;gap:.4em;
+  box-shadow:0 .1em 0 var(--coral-osc),0 .32em .6em rgba(27,42,85,.25);
+  transition:transform .08s,box-shadow .08s;
+}
+.boton svg{width:.9em;height:.9em;fill:currentColor;stroke:currentColor}
+.boton:active{transform:translateY(.08em);box-shadow:0 .02em 0 var(--coral-osc),0 .15em .3em rgba(27,42,85,.25)}
+.boton.latido{animation:latido 1.8s ease-in-out infinite}
+@keyframes latido{50%{transform:scale(1.06)}}
+
+/* ---------- Juego ---------- */
+#p-juego{padding-top:9vh}
+.estrellas{position:absolute;top:2.2vh;left:50%;transform:translateX(-50%);display:flex;gap:.4rem}
+.estrella{width:clamp(28px,6.2vh,50px);height:auto}
+.estrella path{fill:#fff;fill-opacity:.55;stroke:var(--tinta);stroke-width:1.4;stroke-linejoin:round}
+.estrella.on path{fill:var(--sol);fill-opacity:1}
+.estrella.nueva{animation:pop .6s cubic-bezier(.3,1.6,.5,1)}
+
+.sol{
+  width:min(44vh,70vw,420px);aspect-ratio:1;border-radius:50%;
+  background:var(--sol-color,var(--sol));display:grid;place-items:center;
+  box-shadow:0 0 0 .55rem rgba(255,255,255,.6),0 1.1rem 0 rgba(27,42,85,.2);
+}
+.sol.chico{width:min(30vh,44vw,300px)}
+.sol.entra{animation:entra .55s cubic-bezier(.3,1.5,.5,1)}
+.sol.mecer{animation:mecer .55s ease-in-out}
+@keyframes entra{from{transform:scale(.45) rotate(-8deg);opacity:0}}
+@keyframes mecer{20%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}80%{transform:rotate(-2deg)}}
+
+.animal{font-family:var(--emoji);font-size:min(25vh,38vw,240px);line-height:1;animation:flotar 3.4s ease-in-out infinite}
+.sol.chico .animal{font-size:min(17vh,26vw,170px)}
+@keyframes flotar{50%{transform:translateY(-4%)}}
+.animal.saltar{animation:saltar .9s cubic-bezier(.3,1.4,.5,1)}
+@keyframes saltar{0%{transform:translateY(30%) scale(.7)}45%{transform:translateY(-14%) scale(1.08)}100%{transform:none}}
+
+.nombre{
+  font-size:clamp(2.2rem,8vh,4.6rem);font-weight:700;background:#fff;border:4px solid var(--tinta);
+  border-radius:999px;padding:0 .6em;line-height:1.2;box-shadow:0 .08em 0 var(--tinta);
+}
+.nombre.chico{font-size:clamp(1.6rem,5vh,2.8rem)}
+
+.pista{
+  display:flex;align-items:center;gap:.8rem;font-size:clamp(1.15rem,3.2vh,1.8rem);font-weight:600;
+  background:rgba(255,255,255,.85);border-radius:999px;padding:.2rem 1.4rem .2rem .8rem;
+}
+/* Modo prueba: solo aparece cuando no hay lector conectado */
+.prueba{
+  display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;justify-content:center;
+  background:rgba(255,255,255,.8);border:2px dashed var(--tinta);border-radius:999px;padding:.2rem .7rem;
+  font-size:.85rem;font-weight:600;
+}
+.prueba[hidden]{display:none}
+.prueba button{
+  font-family:var(--emoji);font-size:1.5rem;line-height:1;width:2.4rem;height:2.4rem;border-radius:50%;
+  border:2px solid var(--tinta);background:#fff;cursor:pointer;
+}
+.prueba button:active{transform:scale(.92)}
+.lector{height:clamp(48px,9vh,84px);width:auto;overflow:visible}
+.tarjeta-mueve{animation:desliza 3s ease-in-out infinite}
+@keyframes desliza{
+  0%,8%{transform:translate(70px,-6px);opacity:0}
+  28%{opacity:1}
+  52%,78%{transform:translate(-16px,24px);opacity:1}
+  100%{transform:translate(-16px,24px);opacity:0}
+}
+
+/* ---------- Acierto ---------- */
+.ok-cuerpo{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:clamp(1rem,3vw,3rem)}
+.ok-izq{display:flex;flex-direction:column;align-items:center;gap:1.2vh}
+.dato{
+  background:#fff;border:4px solid var(--tinta);border-radius:2rem;padding:1rem 1.5rem 1.2rem;
+  max-width:36rem;text-align:left;box-shadow:0 .45rem 0 rgba(27,42,85,.22);
+}
+.dato-cab{display:flex;align-items:center;justify-content:space-between;gap:1rem;font-weight:700;color:var(--coral-osc);font-size:clamp(1.1rem,3vh,1.5rem);margin-bottom:.3rem}
+.dato p{font-size:clamp(1.3rem,3.9vh,2.2rem);font-weight:500;line-height:1.22}
+.voz{
+  width:clamp(44px,7vh,60px);height:clamp(44px,7vh,60px);border-radius:50%;border:3px solid var(--tinta);
+  background:var(--cielo);cursor:pointer;display:grid;place-items:center;flex:none;
+}
+.voz svg{width:60%;height:60%;fill:var(--tinta)}
+.voz:active{transform:scale(.94)}
+
+/* ---------- Final ---------- */
+.trofeo{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem 1rem;font-family:var(--emoji);font-size:clamp(2.6rem,11vh,5.5rem);max-width:90vw;line-height:1.1}
+.final-texto{font-size:clamp(1.3rem,4vh,2.2rem);font-weight:600;background:rgba(255,255,255,.85);border-radius:999px;padding:.1em 1em}
+
+/* ---------- Error amable ---------- */
+#oops{
+  position:fixed;inset:0;display:grid;place-items:center;z-index:20;background:rgba(27,42,85,.25);
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+#oops.visible{opacity:1;pointer-events:auto}
+.oops-card{
+  background:var(--ambar);border:4px solid var(--tinta);border-radius:2rem;padding:1.2rem 2rem 1.5rem;
+  text-align:center;max-width:min(30rem,90vw);box-shadow:0 .5rem 0 rgba(27,42,85,.25);
+  transform:scale(.88);transition:transform .25s cubic-bezier(.3,1.5,.5,1);
+}
+#oops.visible .oops-card{transform:none;animation:mecer .6s ease-in-out}
+.oops-emoji{font-family:var(--emoji);font-size:clamp(3.6rem,14vh,7rem);line-height:1.1}
+.oops-card h3{font-size:clamp(2rem,6.5vh,3.4rem);line-height:1.1}
+.oops-card p{font-size:clamp(1.2rem,3.6vh,1.9rem);font-weight:500;margin-top:.3rem}
+
+#confeti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:25}

@@ -1,0 +1,54 @@
+/* Base: fuente, colores, fondo, pantallas y título */
+/* Fuente incluida en la carpeta /fonts: el juego funciona sin internet */
+@font-face{
+  font-family:'Fredoka';font-style:normal;font-weight:300 700;font-display:swap;
+  src:url('../fonts/fredoka-latin-wght-normal.woff2') format('woff2');
+}
+:root{
+  --cielo:#8ADCFF; --cielo-2:#C4EEFF; --sol:#FFCB2E;
+  --hoja:#2FAE60; --hoja-2:#6FD08C;
+  --coral:#FF6F4F; --coral-osc:#D9482F;
+  --tinta:#1B2A55; --ambar:#FFE3A6; --blanco:#fff;
+  --fuente:'Fredoka','Arial Rounded MT Bold','Trebuchet MS',system-ui,sans-serif;
+  --emoji:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{
+  font-family:var(--fuente);color:var(--tinta);
+  background:linear-gradient(var(--cielo) 0%,var(--cielo-2) 62%,#EAF9FF 100%);
+  overflow:hidden;user-select:none;-webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+input,button{font-family:inherit}
+:focus-visible{outline:4px solid var(--tinta);outline-offset:4px}
+.solo-lectores{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Fondo ---------- */
+.colinas{position:fixed;left:0;right:0;bottom:0;width:100%;height:32vh;pointer-events:none;z-index:0}
+.nube{position:fixed;width:150px;height:46px;background:#fff;border-radius:999px;opacity:.92;z-index:0;pointer-events:none}
+.nube::before,.nube::after{content:"";position:absolute;background:#fff;border-radius:50%}
+.nube::before{width:70px;height:70px;left:22px;top:-34px}
+.nube::after{width:52px;height:52px;left:80px;top:-22px}
+.n1{top:9vh;left:6vw}
+.n2{top:17vh;right:9vw;transform:scale(.8)}
+
+/* ---------- Pantallas ---------- */
+main{position:relative;height:100%}
+.pantalla{
+  position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
+  gap:clamp(.6rem,2.4vh,1.6rem);padding:clamp(1rem,3vh,2rem);text-align:center;z-index:1;
+}
+.pantalla.activa{display:flex}
+
+.titulo{
+  font-size:clamp(3.2rem,15vh,9rem);line-height:.95;font-weight:700;color:#fff;
+  -webkit-text-stroke:.075em var(--tinta);paint-order:stroke fill;
+  filter:drop-shadow(0 .06em 0 rgba(27,42,85,.35));
+  letter-spacing:.01em;
+}
+.titulo.medio{font-size:clamp(2.6rem,10vh,5.6rem)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}

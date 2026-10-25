@@ -1,0 +1,39 @@
+/* Panel maestro */
+/* Esquina y panel maestro */
+.esquina{position:fixed;top:.6rem;right:.6rem;display:flex;align-items:center;gap:.5rem;z-index:30}
+.luz{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--tinta);opacity:.7}
+.luz.on{background:var(--hoja);opacity:1}
+.engrane{
+  width:44px;height:44px;border-radius:50%;border:3px solid var(--tinta);background:rgba(255,255,255,.75);
+  font-size:1.2rem;cursor:pointer;opacity:.55;font-family:var(--emoji);
+}
+.engrane:hover,.engrane:focus-visible{opacity:1}
+
+#velo{position:fixed;inset:0;background:rgba(27,42,85,.35);z-index:40}
+#velo[hidden]{display:none}
+.panel{
+  position:fixed;top:0;right:0;bottom:0;width:min(460px,100vw);background:#fff;z-index:50;
+  padding:1rem 1.2rem 2rem;overflow:auto;transform:translateX(105%);transition:transform .25s;
+  box-shadow:-8px 0 30px rgba(27,42,85,.3);user-select:text;-webkit-user-select:text;font-size:1rem;
+}
+.panel.abierto{transform:none}
+.panel header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.4rem}
+.panel h2{font-size:1.6rem}
+.panel h3{font-size:1.15rem;margin:1.2rem 0 .4rem}
+.panel .nota{font-size:.9rem;opacity:.8;margin:.3rem 0}
+.panel label{display:flex;align-items:center;gap:.6rem;margin:.5rem 0;font-weight:500}
+.panel input[type=number]{width:4.5rem;padding:.3rem;border:2px solid var(--tinta);border-radius:.6rem;font-size:1rem}
+.panel input[type=text]{flex:1 1 11rem;min-width:0;padding:.4rem .6rem;border:2px solid var(--tinta);border-radius:.6rem;font-size:1rem}
+.cerrar{width:44px;height:44px;border-radius:50%;border:3px solid var(--tinta);background:#fff;font-size:1.1rem;cursor:pointer}
+.mini{
+  font-size:.95rem;font-weight:600;padding:.4rem .8rem;border-radius:.7rem;border:2px solid var(--tinta);
+  background:var(--sol);color:var(--tinta);cursor:pointer;
+}
+.mini.sec{background:#fff}
+.mini:disabled{opacity:.45;cursor:not-allowed}
+.fila-botones{display:flex;gap:.5rem;flex-wrap:wrap;margin:.4rem 0}
+.fila{display:grid;grid-template-columns:auto 1fr auto auto;gap:.3rem .5rem;align-items:center;padding:.5rem;border-radius:.8rem;margin-bottom:.4rem;border:2px solid #E1E6F2}
+.fila.aprende{border-color:var(--coral);background:#FFF1EC}
+.f-emoji{font-family:var(--emoji);font-size:1.7rem}
+.f-nombre{font-weight:600}
+.f-uid{grid-column:1/-1;padding:.4rem .6rem;border:2px solid var(--tinta);border-radius:.6rem;font-size:1rem;letter-spacing:.05em}
