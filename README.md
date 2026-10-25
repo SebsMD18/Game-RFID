@@ -44,7 +44,6 @@ Observamos que a muchos niños de primaria les cuesta mantener la atención en a
 | `js/panel.js` | Panel del maestro. |
 | `js/main.js` | Conecta los módulos. |
 | `fonts/` | Fuente Fredoka (licencia OFL), incluida para funcionar sin internet. |
-| `firmware/esp32_animalandia/` | Código principal: ESP32 + RC522, por WiFi y por USB. |
 | `firmware/arduino_uno_serial/` | Respaldo: Arduino Uno + RC522, solo USB. Mismo protocolo. |
 
 Orden de carga (`index.html`): `datos → util → ajustes → sonido → confeti → lector → juego → panel → main`. Los módulos son scripts clásicos con objetos globales (`Juego`, `Lector`, `Panel`…), por lo que funciona abriendo `index.html` con doble clic.
@@ -126,7 +125,6 @@ We observed that many elementary school children struggle to stay engaged with t
 | `js/panel.js` | Teacher's panel. |
 | `js/main.js` | Connects the modules. |
 | `fonts/` | Fredoka font (OFL license), included to work offline. |
-| `firmware/esp32_animalandia/` | Main code: ESP32 + RC522, via WiFi and USB. |
 | `firmware/arduino_uno_serial/` | Backup: Arduino Uno + RC522, USB only. Same protocol. |
 
 Load order (`index.html`): `datos → util → ajustes → sonido → confeti → lector → juego → panel → main`. Modules are classic scripts with global objects (`Juego`, `Lector`, `Panel`…), so it works by double-clicking `index.html`.
