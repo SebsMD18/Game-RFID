@@ -1,24 +1,24 @@
-/* Panel maestro: conexión del Arduino, asignación de tarjetas y opciones. */
+/* Panel de configuracion: conexión del Arduino, asignación de tarjetas y opciones. */
 
 const Panel = (() => {
-  let aprendiendo = null;     // id del animal que espera una tarjeta
+  let aprendiendo = null;     // id del objeto que espera una tarjeta
 
   const estaAbierto = () => $('#panel').classList.contains('abierto');
   const msg = t => { $('#panelMsg').textContent = t || ''; };
 
-  /* ---------- Lista de tarjetas ---------- */
+  /*Lista de tarjetas*/
   function construirLista(){
     const cont = $('#listaTarjetas');
     cont.textContent = '';
-    ANIMALES.forEach(a => {
+    OBJETOS.forEach(o => {
       const f = document.createElement('div');
-      f.className = 'fila'; f.dataset.id = a.id;
+      f.className = 'fila'; f.dataset.id = o.id;
       f.innerHTML =
-        `<span class="f-emoji" aria-hidden="true">${a.emoji}</span>` +
-        `<span class="f-nombre">${a.nombre}</span>` +
+        `<span class="f-emoji" aria-hidden="true">${o.emoji}</span>` +
+        `<span class="f-nombre">${o.nombre}</span>` +
         `<button class="mini" data-acc="leer">Leer</button>` +
         `<button class="mini sec" data-acc="probar">Probar</button>` +
-        `<input class="f-uid" autocomplete="off" spellcheck="false" placeholder="UID de la tarjeta" aria-label="UID de la tarjeta de ${a.nombre}">`;
+        `<input class="f-uid" autocomplete="off" spellcheck="false" placeholder="UID de la tarjeta" aria-label="UID de la tarjeta de ${o.nombre}">`;
       cont.append(f);
     });
   }
@@ -36,7 +36,7 @@ const Panel = (() => {
     Ajustes.asignar(id, uid);
     aprendiendo = null;
     actualizarFilas();
-    msg(`Tarjeta ${uid} asignada a ${ANIMALES.find(a => a.id === id).nombre}.`);
+    msg(`Tarjeta ${uid} asignada a ${OBJETOS.find(o => o.id === id).nombre}.`);
   }
 
   function abrir(abrir){
@@ -49,7 +49,7 @@ const Panel = (() => {
     else { aprendiendo = null; actualizarFilas(); msg(''); }
   }
 
-  /* ---------- Conexión con el lector ---------- */
+  /*Conexión con el lector*/
   function mostrarEstado(e){
     $('#luz').classList.toggle('on', e.conectado);
     $('#lectorEstado').textContent = e.conectado ? 'Arduino conectado por USB ✔' : 'Sin conectar';
@@ -58,14 +58,14 @@ const Panel = (() => {
     $('#btnDesconectar').hidden = !e.conectado;
   }
 
-  /* Devuelve true si el panel usó la tarjeta (asignación o panel abierto) y el juego debe ignorarla. */
+  /*Devuelve true si el panel usó la tarjeta (asignación o panel abierto) y el juego debe ignorarla*/
   function alUid(uid){
     $('#ultimoUID').textContent = uid;
     if(aprendiendo){ asignar(aprendiendo, uid); return true; }
     return estaAbierto();
   }
 
-  /* ---------- Arranque ---------- */
+  /* nicio*/
   function iniciarConexion(){
     $('#btnDesconectar').onclick = Lector.desconectar;
 
@@ -83,11 +83,11 @@ const Panel = (() => {
     $('#optVoz').checked = !!o.voz;
     $('#optSonido').checked = !!o.sonido;
     $('#optRondas').value = o.rondas;
-    $('#optRondas').max = ANIMALES.length;
+    $('#optRondas').max = OBJETOS.length;
     $('#optVoz').onchange = e => { o.voz = e.target.checked; Ajustes.guardarOpciones(); };
     $('#optSonido').onchange = e => { o.sonido = e.target.checked; Ajustes.guardarOpciones(); };
     $('#optRondas').onchange = e => {
-      const v = Math.max(1, Math.min(ANIMALES.length, Number(e.target.value) || 5));
+      const v = Math.max(1, Math.min(OBJETOS.length, Number(e.target.value) || 5));
       e.target.value = v; o.rondas = v; Ajustes.guardarOpciones();
     };
   }
@@ -106,7 +106,7 @@ const Panel = (() => {
       }else{
         if(Juego.pantalla() !== 'juego'){ msg('Primero pulsa «¡Jugar!» y luego usa «Probar».'); return; }
         abrir(false);
-        Juego.jugarCon(ANIMALES.find(a => a.id === id));
+        Juego.jugarCon(OBJETOS.find(o => o.id === id));
       }
     });
 

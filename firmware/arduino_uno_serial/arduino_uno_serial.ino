@@ -1,24 +1,20 @@
 /*
-  Lector de tarjetas RFID con Arduino Uno (solo USB)
-  -----------------------------------------------------------------
-  Usa "Conectar por USB" en la pagina.
-
   Protocolo (texto, una línea por mensaje, 115200 baudios):
     Arduino -> página :  UID:04A1B2C3
     página -> Arduino :  OK  /  NO      (enciende el LED verde / rojo)
 
   Librería: «MFRC522» de GithubCommunity (miguelbalboa).
 
-  Conexión del MFRC522:
+  Conexión del RC522:
     RC522   Arduino Uno
     SDA  -> 10
     SCK  -> 13
     MOSI -> 11
     MISO -> 12
     RST  -> 9
-    3.3V -> 3.3V Bajar corriende de 5V a 3.3V
+    3.3V -> 3.3V 
     GND  -> GND
-*/
+  */
 
 #include <SPI.h>
 #include <MFRC522.h>

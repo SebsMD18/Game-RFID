@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#8ADCFF">
-<title>Busca el animal</title>
+<title>Adivina el objeto</title>
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/pantallas.css">
 <link rel="stylesheet" href="css/panel.css">
@@ -20,11 +20,11 @@
 <noscript><p style="position:relative;z-index:5;padding:2rem;font-size:1.5rem">Este juego necesita JavaScript.</p></noscript>
 
 <main>
-  <!-- Inicio -->
+  <!-- INICIO -->
   <section class="pantalla activa" id="p-inicio" data-p="inicio" aria-labelledby="t-inicio">
-    <h1 class="titulo" id="t-inicio">¡Busca<br>el animal!</h1>
+    <h1 class="titulo" id="t-inicio">¡Adivina<br>el objeto!</h1>
     <div class="desfile" aria-hidden="true">
-      <span style="--i:0">🦁</span><span style="--i:1">🐘</span><span style="--i:2">🦒</span><span style="--i:3">🐧</span><span style="--i:4">🐸</span>
+      <span style="--i:0">🔭</span><span style="--i:1">🚀</span><span style="--i:2">🧬</span><span style="--i:3">🔬</span><span style="--i:4">🤖</span>
     </div>
     <button class="boton latido" id="btnJugar" data-foco>
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>¡Jugar!
@@ -32,10 +32,14 @@
   </section>
 
   <!-- JUEGO -->
-  <section class="pantalla" id="p-juego" data-p="juego" aria-label="Busca la tarjeta del animal">
+  <section class="pantalla" id="p-juego" data-p="juego" aria-label="Lee la pista y busca la tarjeta">
     <div class="estrellas" id="estrellas" aria-hidden="true"></div>
-    <div class="sol" id="sol"><span class="animal" id="animal" aria-hidden="true"></span></div>
-    <div class="nombre" id="nombre"></div>
+    <div class="sol chico" id="sol"><span class="icono" id="icono" aria-hidden="true">❓</span></div>
+    <div class="pregunta"><p id="pregunta"></p>
+      <button class="voz" id="btnPista" aria-label="Escuchar la pista">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+      </button>
+    </div>
     <div class="pista">
       <svg class="lector" viewBox="0 0 230 120" aria-hidden="true">
         <rect x="8" y="52" width="140" height="58" rx="16" fill="#fff" stroke="#1B2A55" stroke-width="6"/>
@@ -47,19 +51,19 @@
           <circle cx="132" cy="24" r="5" fill="#1B2A55"/><circle cx="172" cy="24" r="5" fill="#1B2A55"/>
         </g>
       </svg>
-      <span>Busca su tarjeta</span>
+      <span>Pasa la tarjeta por el lector</span>
     </div>
     <div class="prueba" id="prueba" role="group" aria-label="Modo prueba, sin lector">
       <span>Modo prueba:</span>
     </div>
   </section>
 
-  <!-- Acierto -->
+  <!-- ACIERTO -->
   <section class="pantalla" id="p-ok" data-p="ok" aria-label="¡Correcto!">
     <h2 class="titulo medio" id="okTitulo">¡Muy bien!</h2>
     <div class="ok-cuerpo">
       <div class="ok-izq">
-        <div class="sol chico" id="okSol"><span class="animal" id="okAnimal" aria-hidden="true"></span></div>
+        <div class="sol chico" id="okSol"><span class="icono" id="okIcono" aria-hidden="true"></span></div>
         <div class="nombre chico" id="okNombre"></div>
       </div>
       <div class="dato">
@@ -78,7 +82,7 @@
     </button>
   </section>
 
-  <!-- Final -->
+  <!-- FINAL -->
   <section class="pantalla" id="p-final" data-p="final" aria-label="Fin del juego">
     <h2 class="titulo medio">¡Lo lograste!</h2>
     <div class="trofeo" id="trofeo" aria-hidden="true"></div>
@@ -87,7 +91,7 @@
   </section>
 </main>
 
-<!-- Error -->
+<!-- INCORRECTO -->
 <div id="oops" role="status" aria-live="polite">
   <div class="oops-card">
     <div class="oops-emoji" id="oopsEmoji" aria-hidden="true"></div>
@@ -99,7 +103,7 @@
 <canvas id="confeti" aria-hidden="true"></canvas>
 <div class="solo-lectores" id="anuncio" aria-live="polite"></div>
 
-<!-- Esquina discreta para el maestro -->
+<!-- CONFIGURACION -->
 <div class="esquina">
   <span class="luz" id="luz" title="Lector USB"></span>
   <button class="engrane" id="btnPanel" aria-label="Opciones para el maestro" aria-expanded="false" aria-controls="panel">⚙️</button>
@@ -121,15 +125,15 @@
   <p class="nota" id="lectorNota"></p>
   <p class="nota">Última tarjeta leída: <b id="ultimoUID">ninguna</b></p>
 
-  <h3>Tarjetas de los animales</h3>
-  <p class="nota">Pulsa «Leer» y pasa la tarjeta por el lector para asignarla al animal. «Probar» simula que el niño la pasó.</p>
+  <h3>Tarjetas</h3>
+  <p class="nota">Pulsa «Leer» y pasa la tarjeta por el lector para asignarla al objeto. «Probar» simula que el niño la pasó.</p>
   <div id="listaTarjetas"></div>
   <button class="mini sec" id="btnBorrar">Borrar tarjetas guardadas</button>
 
   <h3>Juego</h3>
   <label><input type="checkbox" id="optVoz"> Leer en voz alta</label>
   <label><input type="checkbox" id="optSonido"> Sonidos</label>
-  <label>Animales por partida <input type="number" id="optRondas" min="1" max="8"></label>
+  <label>Preguntas por partida <input type="number" id="optRondas" min="1" max="24"></label>
 
   <p class="nota" id="panelMsg" role="status"></p>
 </aside>
@@ -143,5 +147,18 @@
 <script src="js/juego.js" defer></script>
 <script src="js/panel.js" defer></script>
 <script src="js/main.js" defer></script>
+<script>
+
+<!-- UTILIDADES -->
+addEventListener('load', () => {
+  const sinJs = typeof Juego === 'undefined';
+  const sinCss = getComputedStyle(document.body).overflow !== 'hidden';
+  if(!sinJs && !sinCss) return;
+  const d = document.createElement('div');
+  d.setAttribute('style', 'position:fixed;inset:0;z-index:999;display:grid;place-items:center;padding:1rem;background:#fff;font:600 1.2rem/1.4 system-ui,sans-serif;color:#1B2A55;text-align:center');
+  d.textContent = 'Faltan archivos del juego. Deja index.html junto a las carpetas css, js y fonts (sin moverlo ni separarlo) y vuelve a abrirlo.';
+  document.body.append(d);
+});
+</script>
 </body>
 </html>

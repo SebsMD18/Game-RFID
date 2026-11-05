@@ -8,7 +8,7 @@ const almacen = {
 const Ajustes = (() => {
   const guardadas = almacen.leer('animalitos.tarjetas', {});
   const tarjetas = {};
-  ANIMALES.forEach(a => { tarjetas[a.id] = guardadas[a.id] || TARJETAS_POR_DEFECTO[a.id] || ''; });
+  OBJETOS.forEach(o => { tarjetas[o.id] = guardadas[o.id] || TARJETAS_POR_DEFECTO[o.id] || ''; });
 
   const opciones = Object.assign({ voz:true, sonido:true, rondas:5 }, almacen.leer('animalitos.opciones', {}));
 
@@ -18,9 +18,9 @@ const Ajustes = (() => {
     guardarTarjetas: () => almacen.guardar('animalitos.tarjetas', tarjetas),
     guardarOpciones: () => almacen.guardar('animalitos.opciones', opciones),
 
-    animalDe: uid => ANIMALES.find(a => Util.normUID(tarjetas[a.id]) === uid) || null,
+    objetoDe: uid => OBJETOS.find(o => Util.normUID(tarjetas[o.id]) === uid) || null,
 
-    /* Asigna uid a un animal y se lo quita a cualquier otro que lo tuviera. */
+    /* Asigna uid a un objeto y se lo quita a cualquier otro que lo tuviera. */
     asignar(id, uid){
       uid = Util.normUID(uid);
       for(const k in tarjetas){ if(k !== id && uid && Util.normUID(tarjetas[k]) === uid) tarjetas[k] = ''; }
@@ -29,7 +29,7 @@ const Ajustes = (() => {
     },
 
     restablecerTarjetas(){
-      ANIMALES.forEach(a => { tarjetas[a.id] = TARJETAS_POR_DEFECTO[a.id] || ''; });
+      OBJETOS.forEach(o => { tarjetas[o.id] = TARJETAS_POR_DEFECTO[o.id] || ''; });
       Ajustes.guardarTarjetas();
     }
   };

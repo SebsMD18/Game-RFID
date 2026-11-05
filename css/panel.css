@@ -1,5 +1,4 @@
-/* Panel maestro */
-/* Esquina y panel maestro */
+/* Engranaje/opciones */
 .esquina{position:fixed;top:.6rem;right:.6rem;display:flex;align-items:center;gap:.5rem;z-index:30}
 .luz{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--tinta);opacity:.7}
 .luz.on{background:var(--hoja);opacity:1}

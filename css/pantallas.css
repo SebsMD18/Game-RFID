@@ -16,7 +16,7 @@
 .boton.latido{animation:latido 1.8s ease-in-out infinite}
 @keyframes latido{50%{transform:scale(1.06)}}
 
-/* ---------- Juego ---------- */
+/*Juego*/
 #p-juego{padding-top:9vh}
 .estrellas{position:absolute;top:2.2vh;left:50%;transform:translateX(-50%);display:flex;gap:.4rem}
 .estrella{width:clamp(28px,6.2vh,50px);height:auto}
@@ -35,10 +35,10 @@
 @keyframes entra{from{transform:scale(.45) rotate(-8deg);opacity:0}}
 @keyframes mecer{20%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}80%{transform:rotate(-2deg)}}
 
-.animal{font-family:var(--emoji);font-size:min(25vh,38vw,240px);line-height:1;animation:flotar 3.4s ease-in-out infinite}
-.sol.chico .animal{font-size:min(17vh,26vw,170px)}
+.icono{font-family:var(--emoji);font-size:min(25vh,38vw,240px);line-height:1;animation:flotar 3.4s ease-in-out infinite}
+.sol.chico .icono{font-size:min(17vh,26vw,170px)}
 @keyframes flotar{50%{transform:translateY(-4%)}}
-.animal.saltar{animation:saltar .9s cubic-bezier(.3,1.4,.5,1)}
+.icono.saltar{animation:saltar .9s cubic-bezier(.3,1.4,.5,1)}
 @keyframes saltar{0%{transform:translateY(30%) scale(.7)}45%{transform:translateY(-14%) scale(1.08)}100%{transform:none}}
 
 .nombre{
@@ -51,18 +51,30 @@
   display:flex;align-items:center;gap:.8rem;font-size:clamp(1.15rem,3.2vh,1.8rem);font-weight:600;
   background:rgba(255,255,255,.85);border-radius:999px;padding:.2rem 1.4rem .2rem .8rem;
 }
+/* Pista */
+.pregunta{
+  display:flex;align-items:center;gap:1rem;max-width:min(46rem,92vw);
+  background:#fff;border:4px solid var(--tinta);border-radius:2rem;padding:.7rem 1.1rem .8rem 1.5rem;
+  box-shadow:0 .45rem 0 rgba(27,42,85,.22);
+}
+.pregunta p{font-size:clamp(1.3rem,4.2vh,2.5rem);font-weight:600;line-height:1.2;text-align:left}
+.pregunta .voz{flex:none}
+
 /* Modo prueba: solo aparece cuando no hay lector conectado */
 .prueba{
-  display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;justify-content:center;
-  background:rgba(255,255,255,.8);border:2px dashed var(--tinta);border-radius:999px;padding:.2rem .7rem;
-  font-size:.85rem;font-weight:600;
+  position:fixed;bottom:.6rem;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;align-items:center;gap:.3rem;flex-wrap:wrap;justify-content:center;
+  width:max-content;max-width:min(94vw,44rem);
+  background:rgba(255,255,255,.85);border:2px dashed var(--tinta);border-radius:1.4rem;padding:.3rem .7rem;
+  font-size:.8rem;font-weight:600;
 }
 .prueba[hidden]{display:none}
 .prueba button{
-  font-family:var(--emoji);font-size:1.5rem;line-height:1;width:2.4rem;height:2.4rem;border-radius:50%;
+  font-family:var(--emoji);font-size:1.25rem;line-height:1;width:2.1rem;height:2.1rem;border-radius:50%;
   border:2px solid var(--tinta);background:#fff;cursor:pointer;
 }
 .prueba button:active{transform:scale(.92)}
+@media (max-width:640px){ .prueba{position:static;transform:none;margin-top:.2rem} }
 .lector{height:clamp(48px,9vh,84px);width:auto;overflow:visible}
 .tarjeta-mueve{animation:desliza 3s ease-in-out infinite}
 @keyframes desliza{
@@ -72,7 +84,7 @@
   100%{transform:translate(-16px,24px);opacity:0}
 }
 
-/* ---------- Acierto ---------- */
+/* Acierto*/
 .ok-cuerpo{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:clamp(1rem,3vw,3rem)}
 .ok-izq{display:flex;flex-direction:column;align-items:center;gap:1.2vh}
 .dato{
@@ -88,11 +100,11 @@
 .voz svg{width:60%;height:60%;fill:var(--tinta)}
 .voz:active{transform:scale(.94)}
 
-/* ---------- Final ---------- */
+/*Final*/
 .trofeo{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem 1rem;font-family:var(--emoji);font-size:clamp(2.6rem,11vh,5.5rem);max-width:90vw;line-height:1.1}
 .final-texto{font-size:clamp(1.3rem,4vh,2.2rem);font-weight:600;background:rgba(255,255,255,.85);border-radius:999px;padding:.1em 1em}
 
-/* ---------- Error amable ---------- */
+/*Error */
 #oops{
   position:fixed;inset:0;display:grid;place-items:center;z-index:20;background:rgba(27,42,85,.25);
   opacity:0;pointer-events:none;transition:opacity .2s;

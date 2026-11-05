@@ -1,4 +1,4 @@
-/* Arranque: conecta los módulos entre sí. */
+/* Inicio: conecta los módulos entre sí. */
 
 Confeti.iniciar();
 Juego.init();

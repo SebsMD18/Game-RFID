@@ -1,4 +1,4 @@
-/* Voz (SpeechSynthesis) y efectos de sonido (WebAudio, sin archivos). */
+/* Voz (SpeechSynthesis) y efectos de sonido (WebAudio, sin archivos) */
 
 const Sonido = (() => {
   let ac = null;

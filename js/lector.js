@@ -1,9 +1,10 @@
-/* Lector de tarjetas: Arduino por USB (Web Serial, Chrome o Edge).
-   No toca el DOM. Se comunica con el resto mediante callbacks:
+/*
+   No toca el DOM. Se comunica con el resto mediante callbacks.
      alUid(uid)        -> llegó una tarjeta
      alEstado(estado)  -> { conectado }
-     alMensaje(texto)  -> aviso para el maestro
-   Protocolo (115200 baudios): la placa envía líneas "UID:04A1B2C3"; el juego responde "OK" o "NO". */
+     alMensaje(texto)  -> aviso
+   Protocolo (115200 baudios): la placa envía líneas "UID:04A1B2C3"; el juego responde "OK" o "NO"
+*/
 
 const Lector = (() => {
   const s = { puerto:null, lector:null, cerrando:false, ultimoUID:'', ultimoTiempo:0 };
@@ -12,7 +13,7 @@ const Lector = (() => {
 
   const notificar = () => cb.alEstado({ conectado: !!s.puerto });
 
-  /* ---------- Entrada de tarjetas ---------- */
+  /*Entrada de tarjetas*/
   function emitirUid(crudo){
     const uid = Util.normUID(crudo);
     if(!uid) return;
@@ -27,7 +28,7 @@ const Lector = (() => {
     if(m) emitirUid(m[1]);
   }
 
-  /* ---------- Conexión ---------- */
+  /*Conexión*/
   async function abrirPuerto(p){
     if(s.puerto) return;
     try{ await p.open({ baudRate:115200 }); }
@@ -74,7 +75,7 @@ const Lector = (() => {
     try{ await s.lector?.cancel(); }catch{}
   }
 
-  /* Envía "OK" o "NO" a la placa (enciende el LED verde o rojo). */
+  /* Envía "OK" o "NO" a la placa*/
   async function enviar(texto){
     const p = s.puerto;
     if(!p || !p.writable) return;
@@ -83,7 +84,7 @@ const Lector = (() => {
     catch{} finally{ if(w) w.releaseLock(); }
   }
 
-  /* Al abrir la página: reconecta al puerto que el navegador ya autorizó. */
+  /*reconecta al puerto que el navegador ya autorizó si se recarga o abre de nuevo. */
   function reconectarGuardado(){
     if(soportaUSB) navigator.serial.getPorts().then(ps => { if(ps[0]) abrirPuerto(ps[0]); }).catch(() => {});
   }

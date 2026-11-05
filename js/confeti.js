@@ -1,3 +1,5 @@
+/* Confeti en un canva a pantalla completa.*/
+
 const Confeti = (() => {
   const COLORES = ['#FFCB2E', '#FF6F4F', '#2FAE60', '#3DA5FF', '#B66DFF', '#FF8FC7'];
   const cv = $('#confeti');

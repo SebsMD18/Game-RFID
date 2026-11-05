@@ -1,4 +1,4 @@
-/* Utilidades sin dependencias del juego. */
+/* Utilidades */
 
 const $  = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -16,9 +16,6 @@ const Util = {
   },
 
   normUID: s => String(s || '').toUpperCase().replace(/[^0-9A-Z]/g, ''),
-
-  alAnimal:  a => (a.art === 'el' ? 'al '  : 'a la ')  + a.nombre.toLowerCase(),
-  delAnimal: a => (a.art === 'el' ? 'del ' : 'de la ') + a.nombre.toLowerCase(),
 
   reducirMovimiento: matchMedia('(prefers-reduced-motion: reduce)').matches,
 

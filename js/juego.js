@@ -1,11 +1,11 @@
-/* Flujo del juego: rondas, acierto, error amable y pantalla final. */
+/* Flujo del juego: pista, acierto, error amable y pantalla final. */
 
 const Juego = (() => {
   const est = { pantalla:'inicio', ronda:[], idx:0, hechos:[], objetivo:null };
   const pantallas = $$('.pantalla');
   let tOops = 0;
 
-  /* ---------- Pantallas ---------- */
+  /*Pantallas*/
   function irA(nombre){
     est.pantalla = nombre;
     pantallas.forEach(p => p.classList.toggle('activa', p.dataset.p === nombre));
@@ -25,30 +25,28 @@ const Juego = (() => {
     }
   }
 
-  /* ---------- Partida ---------- */
+  /*Juego actual*/
   function iniciar(){
-    const asignados = ANIMALES.filter(a => Util.normUID(Ajustes.tarjetas[a.id]));
-    const pool = asignados.length ? asignados : ANIMALES;   // sin tarjetas guardadas: modo demostración
+    const asignados = OBJETOS.filter(o => Util.normUID(Ajustes.tarjetas[o.id]));
+    const pool = asignados.length ? asignados : OBJETOS;   // sin tarjetas asignadas: modo demostración
     const n = Math.max(1, Math.min(Number(Ajustes.opciones.rondas) || 5, pool.length));
     est.ronda = Util.mezclar(pool).slice(0, n);
     est.idx = 0; est.hechos = [];
-    mostrarAnimal();
+    mostrarPista();
     irA('juego');
   }
 
-  function mostrarAnimal(){
-    const a = est.ronda[est.idx];
-    est.objetivo = a;
-    $('#animal').textContent = a.emoji;
-    $('#nombre').textContent = a.nombre;
+  function mostrarPista(){
+    const o = est.ronda[est.idx];
+    est.objetivo = o;
+    $('#pregunta').textContent = o.pregunta;
+    $('#anuncio').textContent = o.pregunta;
     const sol = $('#sol');
-    sol.style.setProperty('--sol-color', a.color);
+    sol.style.setProperty('--sol-color', o.color);
     sol.classList.remove('mecer');          // si no, «mecer» (error anterior) tapa la animación de entrada
     Util.reiniciarAnimacion(sol, 'entra');
     dibujarEstrellas();
-    const frase = 'Busca ' + Util.alAnimal(a);
-    $('#anuncio').textContent = frase;
-    Sonido.hablar(frase);
+    Sonido.hablar(o.pregunta);
   }
 
   function ocultarOops(){
@@ -57,31 +55,30 @@ const Juego = (() => {
   }
 
   function acierto(){
-    const a = est.objetivo;
-    est.hechos.push(a);
+    const o = est.objetivo;
+    est.hechos.push(o);
     ocultarOops();
-    const dato = Util.azar(a.datos);
     const titulo = Util.azar(FELICITACIONES);
     $('#okTitulo').textContent = titulo;
-    $('#okAnimal').textContent = a.emoji;
-    $('#okSol').style.setProperty('--sol-color', a.color);
-    $('#okNombre').textContent = a.nombre;
-    $('#datoTexto').textContent = dato;
+    $('#okIcono').textContent = o.emoji;
+    $('#okSol').style.setProperty('--sol-color', o.color);
+    $('#okNombre').textContent = o.nombre;
+    $('#datoTexto').textContent = o.dato;
     const ultimo = est.hechos.length >= est.ronda.length;
     $('#btnSiguiente').firstChild.textContent = ultimo ? 'Terminar ' : 'Siguiente ';
     irA('ok');
-    Util.reiniciarAnimacion($('#okAnimal'), 'saltar');
+    Util.reiniciarAnimacion($('#okIcono'), 'saltar');
     Sonido.efecto('ok'); Confeti.lanzar(); Lector.enviar('OK');
-    setTimeout(() => { if(est.pantalla === 'ok') Sonido.hablar(`${titulo} ${dato}`); }, 650);
+    setTimeout(() => { if(est.pantalla === 'ok') Sonido.hablar(`${titulo} ${o.nombre}. ${o.dato}`); }, 650);
   }
 
-  function error(animal){
-    const a = est.objetivo;
+  /* objeto = el de la tarjeta que pasó el niño, o null si no se conoce. */
+  function error(objeto){
     const titulo = Util.azar(ANIMOS);
-    const texto = animal
-      ? `Esa tarjeta es ${Util.delAnimal(animal)}. ¡Busca ${Util.alAnimal(a)}!`
-      : `No conozco esa tarjeta. ¡Prueba con otra y busca ${Util.alAnimal(a)}!`;
-    $('#oopsEmoji').textContent = animal ? animal.emoji : '🤔';
+    const texto = objeto
+      ? `Esa es la tarjeta de «${objeto.nombre}». ¡Lee la pista otra vez e inténtalo de nuevo!`
+      : 'No conozco esa tarjeta. ¡Prueba con otra!';
+    $('#oopsEmoji').textContent = objeto ? objeto.emoji : '🤔';
     $('#oopsTitulo').textContent = titulo;
     $('#oopsTexto').textContent = texto;
     const o = $('#oops');
@@ -98,28 +95,29 @@ const Juego = (() => {
     Sonido.efecto('clic');
     if(est.hechos.length >= est.ronda.length){ final(); return; }
     est.idx++;
-    mostrarAnimal();
+    mostrarPista();
     irA('juego');
   }
 
   function final(){
     const n = est.hechos.length;
-    const texto = n === 1 ? 'Encontraste 1 animal' : `Encontraste ${n} animales`;
-    $('#trofeo').textContent = est.hechos.map(a => a.emoji).join(' ');
+    const texto = n === 1 ? 'Descubriste 1 objeto' : `Descubriste ${n} objetos`;
+    $('#trofeo').textContent = est.hechos.map(o => o.emoji).join(' ');
     $('#finalTexto').textContent = texto;
     irA('final');
     Sonido.efecto('final'); Confeti.lanzar(220); setTimeout(() => Confeti.lanzar(120), 450);
     Sonido.hablar(`¡Lo lograste! ${texto}.`);
   }
 
-  /* ---------- Entradas ---------- */
-  /* Tarjeta real, botón de modo prueba o «Probar» del panel. animal = null si no se conoce. */
-  function jugarCon(animal){
+  /*Entradas
+  Tarjeta real, botón de modo prueba o «Probar» del panel. objeto = null si no se conoc
+  */
+  function jugarCon(objeto){
     if(est.pantalla !== 'juego') return;
-    if(animal && animal.id === est.objetivo.id) acierto(); else error(animal);
+    if(objeto && objeto.id === est.objetivo.id) acierto(); else error(objeto);
   }
 
-  const alUid = uid => jugarCon(Ajustes.animalDe(uid));
+  const alUid = uid => jugarCon(Ajustes.objetoDe(uid));
 
   function mostrarPrueba(visible){ $('#prueba').hidden = !visible; }
 
@@ -128,15 +126,16 @@ const Juego = (() => {
     $('#btnSiguiente').onclick = siguiente;
     $('#btnOtra').onclick = () => { Sonido.efecto('clic'); iniciar(); };
     $('#btnVoz').onclick = () => Sonido.hablar($('#datoTexto').textContent, true);
+    $('#btnPista').onclick = () => Sonido.hablar(est.objetivo.pregunta, true);
     $('#oops').onclick = ocultarOops;
 
-    /* Modo prueba: una tarjeta de mentira por animal */
+    /* Modo prueba: una tarjeta fake por objeto */
     const prueba = $('#prueba');
-    ANIMALES.forEach(a => {
+    OBJETOS.forEach(o => {
       const b = document.createElement('button');
-      b.type = 'button'; b.textContent = a.emoji; b.title = a.nombre;
-      b.setAttribute('aria-label', 'Probar con la tarjeta de ' + a.nombre);
-      b.onclick = () => jugarCon(a);
+      b.type = 'button'; b.textContent = o.emoji; b.title = o.nombre;
+      b.setAttribute('aria-label', 'Probar con la tarjeta de ' + o.nombre);
+      b.onclick = () => jugarCon(o);
       prueba.append(b);
     });
   }
